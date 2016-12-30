@@ -6,9 +6,25 @@ class Perfil(object):
 		self.nome = nome
 		self.telefone = telefone
 		self.empresa = empresa
+		self.__curtidas = 0
 
 	def imprimir(self):
-		  print "Nome : %s, Telefone: %s, Empresa %s" % (self.nome, self.telefone, self.empresa)
+		print "Nome : %s, Telefone: %s, Empresa %s" % (self.nome, self.telefone, self.empresa)
+
+	def curtir(self):
+		self.__curtidas+=1
+
+	def obter_curtidas(self):
+		return self.__curtidas
+
+class Perfil_Vip(Perfil):
+	'Classe para perfil de usuários vips'
+	def __init__(self, nome, telefone, empresa, apelido):
+		super(Perfil_Vip, self).__init__(nome, telefone, empresa)
+		self.apelido = apelido
+
+	def obter_creditos(self):
+		return super(Perfil_Vip, self).obter_curtidas() * 10.0
 
 class Data(object):
 	'Classe de Data'
@@ -32,3 +48,30 @@ class Pessoa(object):
 	def imprime_imc(self):
 		imc = self.peso / (self.altura * self.altura)
 		print 'Imc de %s: %s' %(self.nome, imc)
+
+class Retangulo(object):
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.__area = x * y
+
+    def obter_area(self):
+        return self.__area
+
+class Conta(object):
+    def __init__(self, titular, saldo):
+        self.titular = titular
+        self.saldo = saldo
+
+
+    def calcular_imposto(self): 
+        self.saldo = self.saldo * 0.10
+        return self.saldo
+
+class ContaCorrente(Conta):
+    def __init__(self, titular, saldo):
+        super(ContaCorrente, self).__init__(titular, saldo)
+
+    def calcular_imposto(self):
+        return super(ContaCorrente, self).calcular_imposto() + 20
